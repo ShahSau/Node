@@ -11,8 +11,8 @@ To run a script, type node `path/scriptName`
 In JavaScript, any variable defined outside any function or block is part of the global scope and is a global variable that any function can access.
 Useful global variables:
 
-__dirname - path to the current directory
-__filename - filename
-require - function to use modules
-module - info about the current module
-process -info about the environment where the program is being executed
+- __dirname - path to the current directory
+- __filename - filename
+- require - function to use modules
+- module - info about the current module
+- process -info about the environment where the program is being executed
