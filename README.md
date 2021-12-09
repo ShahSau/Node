@@ -3,11 +3,11 @@
 ## What is Node?
 Node js is different from Browser js as Node has no DOM and window and is based on versions. its a server-side app based on common js and has filesystems.
 
-##CLI:
-To run a script, type node `path/scriptName
+## CLI:
+To run a script, type node `path/scriptName`
 
 
-##Global variable:
+## Global variable:
 In JavaScript, any variable defined outside any function or block is part of the global scope and is a global variable that any function can access.
 Useful global variables:
 
