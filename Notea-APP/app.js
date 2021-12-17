@@ -2,9 +2,10 @@
 //fs.writeFileSync('notes.txt', 'my name is !!!')
 //fs.appendFileSync('notes.txt', 'this is the 2nd line')
 // const validator = require("validator")
-const getNotes = require("./notes")
+const notes = require("./notes")
 const chalk = require("chalk")
 const yargs = require('yargs')
+const { argv } = require("yargs")
 // console.log(getNotes())
 // console.log(validator.isEmail('shah@ddd.com'))
 // console.log(chalk.green.bgRed.bold("success"))
@@ -25,16 +26,34 @@ const yargs = require('yargs')
 yargs.command({
     command: 'add',
     describe:'Adding a new note',
-    handler: ()=>{
-        console.log('adding a new note!')
+    builder:{
+        title:{
+            describe: 'Note title',
+            demandOption:true,
+            type:'string'
+        },
+        body:{
+            describe:"Body of note",
+            demandOption:true,
+            type:"string"
+        }
+    },
+    handler: (argv)=>{
+        notes.addNotes(argv.title, argv.body)
     }
 })
 //create remove command
 yargs.command({
     command: 'remove',
     describe:'Removing a new note',
-    handler: ()=>{
-        console.log('removing the note!')
+    builder:{
+        title:{
+            describe: 'Note title',
+            demandOption:true,
+            type:'string'
+        }},
+    handler: (argv)=>{
+        notes.removeNotes(argv.title)
     }
 })
 //create list command
@@ -42,15 +61,23 @@ yargs.command({
     command: 'list',
     describe:'listing the note',
     handler: ()=>{
-        console.log('listing the note!')
+        let allNotes= notes.getNotes()
+        allNotes.map(note=> console.log(chalk.green(note.title)))
     }
 })
 //create remove command
 yargs.command({
     command: 'read',
     describe:'Reading the notes',
-    handler: ()=>{
-        console.log('reading the notes')
+    builder:{
+        title:{
+            describe: 'Note title',
+            demandOption:true,
+            type:'string'
+        }},
+    handler: (argv)=>{
+        notes.readNote(argv.title)
     }
 })
-console.log(yargs.argv)
+yargs.parse()
+// console.log(yargs.argv)
