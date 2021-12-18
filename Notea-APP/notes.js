@@ -19,6 +19,7 @@ const addNotes = (title, body) => {
   //     return note.title === title
   // })
   const dulpicateNote = notes.find((note) => note.title === title);
+  debugger
   if (!dulpicateNote) {
     notes.push({
       title: title,
