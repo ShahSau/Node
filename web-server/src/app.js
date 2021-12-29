@@ -1,5 +1,7 @@
 const path = require("path");
 const express = require("express");
+const geocode =require("./utils/geocode")
+const forecast = require("./utils/forecast");
 const hbs =require("hbs")
 const app = express();
 //defie paths for express config
@@ -18,6 +20,7 @@ app.get("/", (req, res) => {
     name: "shah",
   });
 });
+
 app.get("/about", (req, res) => {
   res.render("about.hbs", {
     title: "about hbs",
@@ -25,6 +28,43 @@ app.get("/about", (req, res) => {
   });
 });
 
+app.get("/weather", (req,res)=>{
+  if(!req.query.address){
+    return res.send({
+      error: "Address must be provided"
+    })
+  }
+  geocode(req.query.address, (error, {latitude, longitude, location}={}) => {
+    if (error) {
+      return res.send(error);
+    }
+    
+    forecast(latitude, longitude, (error, forecastdata) => {
+      if (error) {
+        return res.send(error);
+      }
+      res.send({
+        location,
+        forecast:forecastdata
+      })
+      // console.log(location)
+      // console.log(forecastdata)
+    });
+  });
+  // res.send({
+  //   address: req.query.address
+  // })
+})
+app.get("/products", (req,res)=>{
+  if(!req.query.search){
+    return res.send({
+      error: "Search must be provided"
+    })
+  }
+  res.send({
+    products: []
+  })
+})
 app.get("/help", (req, res) => {
   res.render("help.hbs", {
     title: "help",
@@ -32,6 +72,18 @@ app.get("/help", (req, res) => {
     message: "help me!!",
   });
 });
+
+app.get("/help/*", (req,res)=>{
+  
+  res.render("helpError.hbs", {
+    name:"Shah"
+  })
+})
+app.get("*", (req,res)=>{
+  res.render("404.hbs", {
+    name:'shah',
+  })
+})
 
 app.listen(3000, () => {
   console.log(`server running`);

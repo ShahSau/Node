@@ -9,7 +9,7 @@ const forecast = (lat,long,callback)=>{
        }else if(body.error){
            callback(body.error.info, undefined)
        }else{
-           callback(undefined, `it is currently ${body.current.temperature} with real feel ${body.current.feelslike}`)
+           callback(undefined, `it is currently ${body.current.temperature} with real feel ${body.current.feelslike}. there is ${body.current.precip} % chance of rain`)
        }
    })
 }
