@@ -2,7 +2,7 @@ const request = require("request");
 
 const forecast = (lat,long,callback)=>{
     const url =
-   `http://api.weatherstack.com/current?access_key=77fff55eadc6e9409f192a0eeb50258f&query=${long},${lat}&units=m`; 
+   `http://api.weatherstack.com/current?access_key=${process.env.forecast}&query=${long},${lat}&units=m`; 
    const map = request({ url, json: true }, (error, {body}) => {
        if(error){
            callback("unable to connect", undefined)
